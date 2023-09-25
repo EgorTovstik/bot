@@ -17,6 +17,7 @@ bot = Bot(token = os.getenv("TOKEN"))
 dp = Dispatcher()
 
 
+
 @dp.message(CommandStart()) 
 async def send_welcome(message: Message):
    await message.answer("Добро пожаловать!")
@@ -25,7 +26,18 @@ async def send_welcome(message: Message):
 @dp.message(F.text == "/info")
 async def answer1(message: Message):
    LastRow = data.shape[0]
-   await message.answer('Количество оценок', LastRow)
+   skore = data['Группа'].str.contains('ПИ101').sum()
+   stud_PI101 = len(data[data['Группа'] == 'ПИ101']['Личный номер студента'].unique())
+   pi101 = data.loc[data['Группа']== 'ПИ101' , 'Личный номер студента'].unique()
+   pi101q = ', '.join(map(str, pi101))
+   control = data['Уровень контроля'].unique()
+   controlq = ', '.join(map(str, control))
+   years = sorted(data['Год'].unique())
+   yearsq = ', '.join(map(str, years))
+   await message.answer(f'Количество оценок {LastRow}, оценок из них {skore} относятся к ПИ101')
+   await message.answer(f'В датасете находятся оценки , {stud_PI101}, студентов со следующими личными номерами: , {pi101q}')
+   await message.answer(f'Используемые формы контроля: {controlq}')
+   await message.answer(f'Данные представлены по следующим учебным годам: {yearsq}')
 
 async def main():
    await dp.start_polling(bot)
