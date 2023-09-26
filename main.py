@@ -24,7 +24,7 @@ async def send_welcome(message: Message):
    await message.answer("Добро пожаловать!")
    await message.answer("Задача этого бота заключается в отображении запроса из excel базы данных.", reply_markup=kb.main)
 
-   
+
 @dp.message(F.text == "Выполнение запроса")
 async def answer1(message: Message):
    LastRow = data.shape[0]
