@@ -3,6 +3,7 @@
 import os
 import asyncio
 import pandas as pd
+import keyboard as kb
 from dotenv import load_dotenv
 from aiogram import Bot, Dispatcher, F
 from aiogram.types import Message
@@ -21,9 +22,10 @@ dp = Dispatcher()
 @dp.message(CommandStart()) 
 async def send_welcome(message: Message):
    await message.answer("Добро пожаловать!")
-   await message.answer("Задача этого бота заключается в отображении запроса из excel базы данных.")
+   await message.answer("Задача этого бота заключается в отображении запроса из excel базы данных.", reply_markup=kb.main)
+
    
-@dp.message(F.text == "/info")
+@dp.message(F.text == "Выполнение запроса")
 async def answer1(message: Message):
    LastRow = data.shape[0]
    skore = data['Группа'].str.contains('ПИ101').sum()
