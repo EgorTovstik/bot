@@ -57,7 +57,7 @@ async def process_name(message: Message, state: FSMContext) -> None:
 @dp.callback_query(F.data == 'quantity')
 async def cbquantity(callback: CallbackQuery):
    LastRow = data.shape[0]
-   skore = data['Группа'].str.contains('ПИ101').sum()
+   skore = data['Группа'].str.contains(str(Form.name)).sum()
    years = sorted(data['Год'].unique())
    yearsq = ', '.join(map(str, years))
    await callback.message.answer(f'Количество оценок {LastRow}, оценок из них {skore} относятся к ПИ101')
@@ -65,8 +65,8 @@ async def cbquantity(callback: CallbackQuery):
 
 @dp.callback_query(F.data == 'number')
 async def cbquantity(callback: CallbackQuery):
-   stud_PI101 = len(data[data['Группа'] == 'ПИ101']['Личный номер студента'].unique())
-   pi101 = data.loc[data['Группа']== 'ПИ101' , 'Личный номер студента'].unique()
+   stud_PI101 = len(data[data['Группа'] == str(Form.name)]['Личный номер студента'].unique())
+   pi101 = data.loc[data['Группа']== str(Form.name) , 'Личный номер студента'].unique()
    pi101q = ', '.join(map(str, pi101))
    years = sorted(data['Год'].unique())
    yearsq = ', '.join(map(str, years))
