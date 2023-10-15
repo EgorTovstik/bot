@@ -14,7 +14,6 @@ from aiogram.filters import CommandStart
 from aiogram.fsm.storage.memory import MemoryStorage
 
 load_dotenv()
-data = None
 
 TOKEN = os.getenv("TOKEN")
 
